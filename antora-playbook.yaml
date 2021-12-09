@@ -1,0 +1,19 @@
+site:
+  title: Embassy Docs
+  start_page: embassy::index.adoc
+
+content:
+  sources:
+    - url: https://github.com/embassy-rs/embassy.git
+      branches: master
+      start_path: docs
+ui: 
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+
+output:
+  clean: true
+runtime:
+  fetch: true
+

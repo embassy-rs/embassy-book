@@ -1,0 +1,22 @@
+#
+# This is a copy of the `antora-playbook.yaml`, but customized to use a local source. This serves as an example,
+# tweak this as you need, but only commit and push what is required to stay in sync with the main file.
+#
+site:
+  title: Embassy Docs
+  start_page: embassy::index.adoc
+
+content:
+  sources:
+    - url: ../embassy
+      branches: HEAD
+      start_path: docs
+ui: 
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+
+output:
+  clean: true
+runtime:
+  fetch: true
