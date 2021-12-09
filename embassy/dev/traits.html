@@ -40,16 +40,16 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="runtime.html">Runtime</a>
+    <a class="nav-link" href="runtime.html">Executor</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="traits.html">Traits</a>
+    <a class="nav-link" href="traits.html">Async traits</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="nrf.html">Nordic nRF HAL</a>
+    <a class="nav-link" href="hal.html">Hardware Interface</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="stm32.html">STM32 HAL</a>
+    <a class="nav-link" href="examples.html">Examples</a>
   </li>
 </ul>
   </li>
@@ -82,7 +82,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="traits.html">Traits</a></li>
+    <li><a href="traits.html">Async traits</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/traits.adoc">Edit this Page</a></div>
@@ -94,7 +94,23 @@
 <article class="doc">
 <h1 class="page">Embassy Traits</h1>
 <div class="paragraph">
-<p>TODO</p>
+<p>Embassy provides a set of traits and types specifically designed for <code>async</code> usage.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>embassy::io</code>: <code>AsyncBufRead</code>, <code>AsyncWrite</code>. Traits for byte-stream IO, essentially <code>no_std</code> compatible versions of <code>futures::io</code>.</p>
+</li>
+<li>
+<p><code>embassy::traits::flash</code>: Flash device trait.</p>
+</li>
+<li>
+<p><code>embassy::time</code>: <code>Clock</code> and <code>Alarm</code> traits. Std-like <code>Duration</code> and <code>Instant</code>.</p>
+</li>
+<li>
+<p>More traits for SPI, I2C, UART async HAL coming soon.</p>
+</li>
+</ul>
 </div>
 </article>
   </div>

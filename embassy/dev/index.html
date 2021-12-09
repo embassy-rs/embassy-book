@@ -40,16 +40,16 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="runtime.html">Runtime</a>
+    <a class="nav-link" href="runtime.html">Executor</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="traits.html">Traits</a>
+    <a class="nav-link" href="traits.html">Async traits</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="nrf.html">Nordic nRF HAL</a>
+    <a class="nav-link" href="hal.html">Hardware Interface</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="stm32.html">STM32 HAL</a>
+    <a class="nav-link" href="examples.html">Examples</a>
   </li>
 </ul>
   </li>
@@ -100,59 +100,24 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_traits_and_types"><a class="anchor" href="#_traits_and_types"></a>Traits and types</h2>
+<h2 id="_what_is_async"><a class="anchor" href="#_what_is_async"></a>What is async?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><code>embassy</code> provides a set of traits and types specifically designed for <code>async</code> usage.</p>
+<p>Software written without async blocks on I/O operations. In a std environment, such as a PC, software handles this problem with threads. When one thread blocks on an I/O operation, another is able to take its place. However, even on a PC, threads are relatively heavy, and therefore some programming languages, such as Go, have implemented a concept called coroutines or 'goroutines' that are much lighter and less-intensive than threads.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>embassy::io</code>: <code>AsyncBufRead</code>, <code>AsyncWrite</code>. Traits for byte-stream IO, essentially <code>no_std</code> compatible versions of <code>futures::io</code>.</p>
-</li>
-<li>
-<p><code>embassy::traits::flash</code>: Flash device trait.</p>
-</li>
-<li>
-<p><code>embassy::time</code>: <code>Clock</code> and <code>Alarm</code> traits. Std-like <code>Duration</code> and <code>Instant</code>.</p>
-</li>
-<li>
-<p>More traits for SPI, I2C, UART async HAL coming soon.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>In rust, this concept is implemented as async. async works by transforming each async function into an object called a future. When a future blocks on I/O the future yields, and the scheduler, called an executor, can select a different future to execute. Compared to alternatives such as an RTOS, async can yield better performance and lower power consumption because the executor doesn&#8217;t have to guess when a future is ready to execute. However, program size may be higher than other alternatives, which may be a problem for certain space-constrained devices with very low memory. On the devices Embassy supports, such as stm32 and nrf, memory is generally large enough to accommodate the modestly-increased program size.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_executor"><a class="anchor" href="#_executor"></a>Executor</h2>
+<h2 id="_what_is_embassy"><a class="anchor" href="#_what_is_embassy"></a>What is Embassy?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The <code>embassy::executor</code> module provides an async/await executor designed for embedded usage.</p>
+<p>Embassy is an executor and a Hardware Access Layer (HAL). The executor is a scheduler that generally executes a fixed number of tasks, allocated at startup, though more can be added later. The HAL is an API that you can use to access certain blocking functionality, such as USART, UART, I2C, SPI, CAN, and USB. Embassy doesn&#8217;t provide access to non-blocking functionality, such as GPIO, because non-blocking functionality doesn&#8217;t require special treatment to work with Embassy. For such functionality, existing HALs are recommended.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>No <code>alloc</code>, no heap needed. Task futures are statically allocated.</p>
-</li>
-<li>
-<p>No "fixed capacity" data structures, executor works with 1 or 1000 tasks without needing config/tuning.</p>
-</li>
-<li>
-<p>Integrated timer queue: sleeping is easy, just do <code>Timer::after(Duration::from_secs(1)).await;</code>.</p>
-</li>
-<li>
-<p>No busy-loop polling: CPU sleeps when there&#8217;s no work to do, using interrupts or <code>WFE/SEV</code>.</p>
-</li>
-<li>
-<p>Efficient polling: a wake will only poll the woken task, not all of them.</p>
-</li>
-<li>
-<p>Fair: a task can&#8217;t monopolize CPU time even if it&#8217;s constantly being woken. All other tasks get a chance to run before a given task gets polled for the second time.</p>
-</li>
-<li>
-<p>Creating multiple executor instances is supported, to run tasks with multiple priority levels. This allows higher-priority tasks to preempt lower-priority tasks.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Embassy also provides a delay trait that can be used to delay a task by a fixed number of microseconds or milliseconds. For less than one microsecond, blocking delays should be used because the cost of context-switching is too high and the executor will be unable to provide accurate timing.</p>
 </div>
 </div>
 </div>

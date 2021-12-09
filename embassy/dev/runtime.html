@@ -40,16 +40,16 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="runtime.html">Runtime</a>
+    <a class="nav-link" href="runtime.html">Executor</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="traits.html">Traits</a>
+    <a class="nav-link" href="traits.html">Async traits</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="nrf.html">Nordic nRF HAL</a>
+    <a class="nav-link" href="hal.html">Hardware Interface</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="stm32.html">STM32 HAL</a>
+    <a class="nav-link" href="examples.html">Examples</a>
   </li>
 </ul>
   </li>
@@ -82,7 +82,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="runtime.html">Runtime</a></li>
+    <li><a href="runtime.html">Executor</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/runtime.adoc">Edit this Page</a></div>
@@ -94,7 +94,32 @@
 <article class="doc">
 <h1 class="page">Embassy runtime</h1>
 <div class="paragraph">
-<p>TODO</p>
+<p>The Embassy excecutor is an async/await executor designed for embedded usage.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No <code>alloc</code>, no heap needed. Task futures are statically allocated.</p>
+</li>
+<li>
+<p>No "fixed capacity" data structures, executor works with 1 or 1000 tasks without needing config/tuning.</p>
+</li>
+<li>
+<p>Integrated timer queue: sleeping is easy, just do <code>Timer::after(Duration::from_secs(1)).await;</code>.</p>
+</li>
+<li>
+<p>No busy-loop polling: CPU sleeps when there&#8217;s no work to do, using interrupts or <code>WFE/SEV</code>.</p>
+</li>
+<li>
+<p>Efficient polling: a wake will only poll the woken task, not all of them.</p>
+</li>
+<li>
+<p>Fair: a task can&#8217;t monopolize CPU time even if it&#8217;s constantly being woken. All other tasks get a chance to run before a given task gets polled for the second time.</p>
+</li>
+<li>
+<p>Creating multiple executor instances is supported, to run tasks with multiple priority levels. This allows higher-priority tasks to preempt lower-priority tasks.</p>
+</li>
+</ul>
 </div>
 </article>
   </div>
