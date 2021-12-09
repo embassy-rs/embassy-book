@@ -1,3 +1,5 @@
 # The Book of Embassy
 
-Read it here: https://book
+To build the book, you need `npm` to install the Antora doc system.
+
+Read it here: https://example.com
