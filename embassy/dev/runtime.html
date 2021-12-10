@@ -93,13 +93,20 @@
 </aside>
 <article class="doc">
 <h1 class="page">Embassy runtime</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The Embassy excecutor is an async/await executor designed for embedded usage.</p>
+<p>The Embassy runtime is an async/await executor designed for embedded usage along with support functionality for interrupts and timers.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_features"><a class="anchor" href="#_features"></a>Features</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
-<p>No <code>alloc</code>, no heap needed. Task futures are statically allocated.</p>
+<p>No <code>alloc</code>, no heap needed. Task are statically allocated.</p>
 </li>
 <li>
 <p>No "fixed capacity" data structures, executor works with 1 or 1000 tasks without needing config/tuning.</p>
@@ -120,6 +127,72 @@
 <p>Creating multiple executor instances is supported, to run tasks with multiple priority levels. This allows higher-priority tasks to preempt lower-priority tasks.</p>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_executor"><a class="anchor" href="#_executor"></a>Executor</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The executor function is described below. The executor keeps a queue of tasks that it should poll. When a task is created, it is polled (1). The task will attempt to make progress until reaches a point where it would be blocked. This may happen whenever a task is .await&#8217;ing an async function. When that happens, the task yields execution by (2) returning <code>Poll::Pending</code>. Once a task yields, the executor enqueues the task at the end of the run queue, and proceeds to (3) poll the next task in the queue. If a task returns <code>Poll::Ready</code> it essentially means that the task is finished and will not be enqueued again.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The executor relies on tasks not blocking indefinitely, as this prevents the executor to regain control and schedule another task.
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/embassy_executor.png" alt="Executor model">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_interrupts"><a class="anchor" href="#_interrupts"></a>Interrupts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Interrupts are a common way for peripherals to signal completion of some operation and fits well with the async execution model. The following diagram describes a typical application flow where (1) a task is polled and is attempting to make progress. The task then (2) instructs the peripheral to perform some operation, and awaits. After some time has passede, (3) an interrupt is raised, marking the completion of the operation.</p>
+</div>
+<div class="paragraph">
+<p>The peripheral HAL then (4) ensures that interrupt signals are routed to to the peripheral and updating the peripheral state with the results of the operation. The executor is then (5) notified that the task should be polled, which it will do.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/embassy_irq.png" alt="Interrupt handling">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_time"><a class="anchor" href="#_time"></a>Time</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Embassy features an internal timer queue enabled by the <code>time</code> feature flag. When enabled, Embassy assumes a time <code>Driver</code> implementation existing for the platform. Embassy provides time drivers for the nRF, STM32, RPi Pico, WASM and Std platforms.</p>
+</div>
+<div class="paragraph">
+<p>The timer driver implementations for the embedded platforms support a fixed number of alarms that can be set, which is normally the number of tasks you expect wanting to use the timer at the same time.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you do not require timers in your application, not enabling the <code>time</code> feature can save some CPU cycles and reduce power usage.
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 </article>
   </div>
