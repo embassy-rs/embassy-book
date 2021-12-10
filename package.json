@@ -1,5 +1,5 @@
 {
-  "name": "book.drogue.io",
+  "name": "book.embassy.rs",
   "version": "1.0.0",
   "description": "",
   "main": "Makefile",
@@ -15,12 +15,12 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drogue-iot/book.drogue.io.git"
+    "url": "git+https://github.com/embassy-rs/embassy-book.git"
   },
   "author": "",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/drogue-iot/book.drogue.io/issues"
+    "url": "https://github.com/embassy-rs/embassy-book/issues"
   },
-  "homepage": "https://github.com/drogue-iot/book.drogue.io#readme"
+  "homepage": "https://github.com/embassy-rs"
 }
