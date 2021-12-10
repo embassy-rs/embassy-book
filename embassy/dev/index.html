@@ -103,10 +103,17 @@
 <h2 id="_what_is_async"><a class="anchor" href="#_what_is_async"></a>What is async?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Software written without async blocks on I/O operations. In a std environment, such as a PC, software handles this problem with threads. When one thread blocks on an I/O operation, another is able to take its place. However, even on a PC, threads are relatively heavy, and therefore some programming languages, such as Go, have implemented a concept called coroutines or 'goroutines' that are much lighter and less-intensive than threads.</p>
+<p>Software written without async may block on I/O operations. In an std environment, such as a PC, software can handle this either by using threads or non-blocking operations.</p>
 </div>
 <div class="paragraph">
-<p>In rust, this concept is implemented as async. async works by transforming each async function into an object called a future. When a future blocks on I/O the future yields, and the scheduler, called an executor, can select a different future to execute. Compared to alternatives such as an RTOS, async can yield better performance and lower power consumption because the executor doesn&#8217;t have to guess when a future is ready to execute. However, program size may be higher than other alternatives, which may be a problem for certain space-constrained devices with very low memory. On the devices Embassy supports, such as stm32 and nrf, memory is generally large enough to accommodate the modestly-increased program size.</p>
+<p>With threads, one thread blocks on an I/O operation, another is able to take its place. However, even on a PC, threads are relatively heavy, and therefore some programming languages, such as Go, have implemented a concept called coroutines or 'goroutines' that are much lighter and less-intensive than threads.</p>
+</div>
+<div class="paragraph">
+<p>The other way to handle blocking I/O operations is to support polling the state of the underlying peripherals to check whether it is available to perform the requested operation. In programming languages without builtin async support,
+this requires building a complex loop checking for events.</p>
+</div>
+<div class="paragraph">
+<p>In Rust, non-blocking operaetions can be implemented using async-await. Async-await works by transforming each async function into an object called a future. When a future blocks on I/O the future yields, and the scheduler, called an executor, can select a different future to execute. Compared to alternatives such as an RTOS, async can yield better performance and lower power consumption because the executor doesn&#8217;t have to guess when a future is ready to execute. However, program size may be higher than other alternatives, which may be a problem for certain space-constrained devices with very low memory. On the devices Embassy supports, such as stm32 and nrf, memory is generally large enough to accommodate the modestly-increased program size.</p>
 </div>
 </div>
 </div>
@@ -114,10 +121,10 @@
 <h2 id="_what_is_embassy"><a class="anchor" href="#_what_is_embassy"></a>What is Embassy?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Embassy is an executor and a Hardware Access Layer (HAL). The executor is a scheduler that generally executes a fixed number of tasks, allocated at startup, though more can be added later. The HAL is an API that you can use to access certain blocking functionality, such as USART, UART, I2C, SPI, CAN, and USB. Embassy doesn&#8217;t provide access to non-blocking functionality, such as GPIO, because non-blocking functionality doesn&#8217;t require special treatment to work with Embassy. For such functionality, existing HALs are recommended.</p>
+<p>Embassy is an executor and a Hardware Access Layer (HAL). The executor is a scheduler that generally executes a fixed number of tasks, allocated at startup, though more can be added later. The HAL is an API that you can use to access peripherals, such as USART, UART, I2C, SPI, CAN, and USB. Embassy provides implementations of both async and blocking APIs where it makes sense. DMA (Direct Memory Access) is an example where async is a good fit, whereas GPIO states are a better fit for a blocking API.</p>
 </div>
 <div class="paragraph">
-<p>Embassy also provides a delay trait that can be used to delay a task by a fixed number of microseconds or milliseconds. For less than one microsecond, blocking delays should be used because the cost of context-switching is too high and the executor will be unable to provide accurate timing.</p>
+<p>Embassy may also provide a system timer that you can use for both async and blocking delays. For less than one microsecond, blocking delays should be used because the cost of context-switching is too high and the executor will be unable to provide accurate timing.</p>
 </div>
 </div>
 </div>
