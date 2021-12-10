@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Examples :: Embassy Docs</title>
-    <meta name="generator" content="Antora 2.3.4">
+    <meta name="generator" content="Antora 3.0.0-rc.2">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
     <link rel="icon" href="../../_/img/favicon.svg" type="image/svg+xml">
@@ -95,6 +95,36 @@
 <h1 class="page">Examples</h1>
 <div class="paragraph">
 <p>Embassy provides examples for all HALs supported. You can find them in the <code>examples/</code> folder.</p>
+</div>
+<div class="paragraph">
+<p>Main loop example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#![feature(type_alias_impl_trait)]
+
+use embassy::executor::Spawner;
+use embassy::time::{Duration, Timer};
+use log::*;
+
+#[embassy::task]
+async fn run() {
+    loop {
+        info!("tick");
+        Timer::after(Duration::from_secs(1)).await;
+    }
+}
+
+#[embassy::main]
+async fn main(spawner: Spawner) {
+    env_logger::builder()
+        .filter_level(log::LevelFilter::Debug)
+        .format_timestamp_nanos()
+        .init();
+
+    spawner.spawn(run()).unwrap();
+}</code></pre>
+</div>
 </div>
 </article>
   </div>
