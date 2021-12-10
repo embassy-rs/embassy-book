@@ -120,12 +120,6 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_the_cargo_toml"><a class="anchor" href="#_the_cargo_toml"></a>The Cargo.toml</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<div class="sect1">
 <h2 id="_the_main"><a class="anchor" href="#_the_main"></a>The main</h2>
 <div class="sectionbody">
 <div class="sect2">
@@ -226,6 +220,27 @@ async fn main(spawner: Spawner, p: Peripherals) {
 <div class="paragraph">
 <p>There is also a way to run the executor without using the macro, in which case you have to create the <code>Executor</code> instance yourself.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_cargo_toml"><a class="anchor" href="#_the_cargo_toml"></a>The Cargo.toml</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The project definition needs to contain the embassy dependencies:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-toml hljs" data-lang="toml">embassy = { version = "0.1.0", path = "../../embassy", features = ["defmt"] }
+embassy-traits = { version = "0.1.0", path = "../../embassy-traits", features = ["defmt"] }
+embassy-nrf = { version = "0.1.0", path = "../../embassy-nrf", features = ["defmt", "nrf52840", "time-driver-rtc1", "gpiote"] }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Depending on your microcontroller, you may need to replace <code>embassy-nrf</code> with something else (<code>embassy-stm32</code> for STM32. Remember to update feature flags as well).</p>
+</div>
+<div class="paragraph">
+<p>In this particular case, the nrf52840 chip is selected, and the RTC1 peripheral is used as the time driver.</p>
 </div>
 </div>
 </div>

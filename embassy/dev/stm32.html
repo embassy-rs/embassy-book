@@ -112,8 +112,46 @@
 </aside>
 <article class="doc">
 <h1 class="page">Embassy STM32 HAL</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>The <a href="https://github.com/embassy-rs/embassy/tree/master/embassy-stm32">Embassy STM32 HAL</a> is based on the <code>stm32-metapac</code> project.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_infinite_variant_problem"><a class="anchor" href="#_the_infinite_variant_problem"></a>The infinite variant problem</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>STM32 microcontrollers comes in many families and flavors, and supporting all of them is a big undertaking. Embassy has taken advantage of the fact
+that the STM32 peripheral versions are shared across chip families. Instead of re-implementing the SPI
+peripheral for every STM32 chip family, embassy have a single SPI implementation that depends on
+code-generated register types that are identical for STM32 families with the same version of a given peripheral.</p>
+</div>
+<div class="sect2">
+<h3 id="_the_metapac"><a class="anchor" href="#_the_metapac"></a>The metapac</h3>
+<div class="paragraph">
+<p>The <code>stm32-metapac</code> module uses pre-generated chip and register definitions for STM32 chip families to generate register types. This is done at compile time based on Cargo feataure flags.</p>
+</div>
+<div class="paragraph">
+<p>The chip and register definitions are located in a separate module, <code>stm32-data</code>, which is modified whenever a bug is found in the definitions, or when adding support for new chip families.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_hal"><a class="anchor" href="#_the_hal"></a>The HAL</h3>
+<div class="paragraph">
+<p>The <code>embassy-stm32</code> module contains the HAL implementation for all STM32 families. The implementation uses automatically derived feature flags to support the correct version of a given peripheral for a given chip family.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_timer_driver"><a class="anchor" href="#_timer_driver"></a>Timer driver</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The STM32 timer driver operates at 32768 Hz by default.</p>
+</div>
+</div>
 </div>
 </article>
   </div>
