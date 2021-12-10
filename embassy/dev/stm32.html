@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Embassy Traits :: Embassy Docs</title>
+    <title>Embassy STM32 HAL :: Embassy Docs</title>
     <meta name="generator" content="Antora 3.0.0-rc.2">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -42,7 +42,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="runtime.html">Runtime</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="traits.html">APIs</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -52,7 +52,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="nrf.html">nRF</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="stm32.html">STM32</a>
   </li>
 </ul>
@@ -100,35 +100,20 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="traits.html">APIs</a></li>
+    <li><a href="hal.html">Hardware Abstraction Layer</a></li>
+    <li><a href="stm32.html">STM32</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/traits.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/stm32.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Embassy Traits</h1>
+<h1 class="page">Embassy STM32 HAL</h1>
 <div class="paragraph">
-<p>Embassy provides a set of traits and types specifically designed for <code>async</code> usage. Many of these futures will be upstreamed to the <code>embedded-hal</code> crate at some point in the future, probably when the required GAT (Generic Associated Types) feature is stabilized in Rust.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>embassy::io</code>: <code>AsyncBufRead</code>, <code>AsyncWrite</code>. Traits for byte-stream IO, essentially <code>no_std</code> compatible versions of <code>futures::io</code>. The primary reason for re-defining these traits is that the <code>futures::io</code> variant requires <code>std::io::Error</code>, which does not work in the <code>no_std</code> environment.</p>
-</li>
-<li>
-<p><code>embassy::traits</code>: Async traits for Flash, SPI, I2C, UART, RNG, GPIO and more.</p>
-</li>
-<li>
-<p><code>embassy::time</code>: Time <code>Driver</code> trait that is implemented for different platforms. Time in Embassy is represented using the <code>Duration</code> and <code>Instant</code> types.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>These traits are implemented by the platform-specific crates, such as <code>embassy-nrf</code> or <code>embassy-stm32</code>.</p>
+<p>TODO</p>
 </div>
 </article>
   </div>

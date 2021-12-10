@@ -40,13 +40,31 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="runtime.html">Executor</a>
+    <a class="nav-link" href="runtime.html">Runtime</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="traits.html">Async traits</a>
+    <a class="nav-link" href="traits.html">APIs</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="hal.html">Hardware Interface</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">Hardware Abstraction Layer</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">Getting started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">Basic application</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="examples.html">Examples</a>
@@ -82,7 +100,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="nrf.html">Embassy nRF HAL</a></li>
+    <li><a href="hal.html">Hardware Abstraction Layer</a></li>
+    <li><a href="nrf.html">nRF</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/nrf.adoc">Edit this Page</a></div>
@@ -93,8 +112,71 @@
 </aside>
 <article class="doc">
 <h1 class="page">Embassy nRF HAL</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>The <a href="https://github.com/embassy-rs/embassy/tree/master/embassy-nrf">Embassy nRF HAL</a> is based on the PACs (Peripheral Access Crate) from <a href="https://github.com/nrf-rs/">nrf-rs</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_timer_driver"><a class="anchor" href="#_timer_driver"></a>Timer driver</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The nRF timer driver operates at 32768 Hz by default.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_peripherals"><a class="anchor" href="#_peripherals"></a>Peripherals</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following peripherals have a HAL implementation at present:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>PWM</p>
+</li>
+<li>
+<p>SPIM</p>
+</li>
+<li>
+<p>QSPI</p>
+</li>
+<li>
+<p>NVMC</p>
+</li>
+<li>
+<p>GPIOTE</p>
+</li>
+<li>
+<p>RNG</p>
+</li>
+<li>
+<p>TIMER</p>
+</li>
+<li>
+<p>WDT</p>
+</li>
+<li>
+<p>TEMP</p>
+</li>
+<li>
+<p>PPI</p>
+</li>
+<li>
+<p>UARTE</p>
+</li>
+<li>
+<p>TWIM</p>
+</li>
+<li>
+<p>SAADC</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </article>
   </div>

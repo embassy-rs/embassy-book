@@ -40,13 +40,31 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="runtime.html">Executor</a>
+    <a class="nav-link" href="runtime.html">Runtime</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="traits.html">Async traits</a>
+    <a class="nav-link" href="traits.html">APIs</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="hal.html">Hardware Interface</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">Hardware Abstraction Layer</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">Getting started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">Basic application</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="examples.html">Examples</a>
@@ -82,7 +100,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="runtime.html">Executor</a></li>
+    <li><a href="runtime.html">Runtime</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/runtime.adoc">Edit this Page</a></div>
@@ -153,6 +171,9 @@ The executor relies on tasks not blocking indefinitely, as this prevents the exe
 <img src="_images/embassy_executor.png" alt="Executor model">
 </div>
 </div>
+<div class="paragraph">
+<p>If you use the <code>#[embassy::main]</code> macro in your application, it creates the <code>Executor</code> for you and spawns the main entry point as the first task. You can also create the Executor manually, and you can in fact create multiple Executors.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -169,6 +190,18 @@ The executor relies on tasks not blocking indefinitely, as this prevents the exe
 <img src="_images/embassy_irq.png" alt="Interrupt handling">
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There exists a special executor named <code>InterruptExecutor</code> which can be driven by an interrupt. This can be used to drive tasks at different priority levels by creating multiple <code>InterruptExecutor</code> instances.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -178,7 +211,10 @@ The executor relies on tasks not blocking indefinitely, as this prevents the exe
 <p>Embassy features an internal timer queue enabled by the <code>time</code> feature flag. When enabled, Embassy assumes a time <code>Driver</code> implementation existing for the platform. Embassy provides time drivers for the nRF, STM32, RPi Pico, WASM and Std platforms.</p>
 </div>
 <div class="paragraph">
-<p>The timer driver implementations for the embedded platforms support a fixed number of alarms that can be set, which is normally the number of tasks you expect wanting to use the timer at the same time.</p>
+<p>The timer driver implementations for the embedded platforms might support only a fixed number of alarms that can be set. Make sure the number of tasks you expect wanting to use the timer at the same time do not exceed this limit.</p>
+</div>
+<div class="paragraph">
+<p>The timer speed is configurable at compile time using the <code>time-tick-&lt;frequency&gt;</code>. At present, the the timer may be configured to run at 1000 Hz, 32768 Hz, or 1 MHz. Before changing the defaults, make sure the target HAL supports the particular frequency setting.</p>
 </div>
 <div class="admonitionblock note">
 <table>

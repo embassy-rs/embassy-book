@@ -40,13 +40,31 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="runtime.html">Executor</a>
+    <a class="nav-link" href="runtime.html">Runtime</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="traits.html">Async traits</a>
+    <a class="nav-link" href="traits.html">APIs</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
-    <a class="nav-link" href="hal.html">Hardware Interface</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hal.html">Hardware Abstraction Layer</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="nrf.html">nRF</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="stm32.html">STM32</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="getting_started.html">Getting started</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="basic_application.html">Basic application</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="examples.html">Examples</a>
@@ -82,7 +100,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="hal.html">Hardware Interface</a></li>
+    <li><a href="hal.html">Hardware Abstraction Layer</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/book-poc/docs/modules/ROOT/pages/hal.adoc">Edit this Page</a></div>
@@ -99,18 +117,18 @@
 <div class="ulist">
 <ul>
 <li>
-<p>embassy-nrf for the nRF family of devices from Nordic Semiconductor</p>
+<p><code>embassy-nrf</code> for the nRF microcontroller sfrom Nordic Semiconductor</p>
 </li>
 <li>
-<p>embassy-stm32 for STM32 family of devices from ST Microelectronics</p>
+<p><code>embassy-stm32</code> for STM32 microcontrollers from ST Microelectronics</p>
 </li>
 <li>
-<p>embassy-rp for Raspberry Pi Pico</p>
+<p><code>embassy-rp</code> for the Raspberry Pi RP2040 microcontrollers</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>These HALs provide async/await access to most peripherals while also implementing the async traits in Embassy.</p>
+<p>These HALs implement async/await functionality for most peripherals while also implementing the async traits in Embassy.</p>
 </div>
 </article>
   </div>
