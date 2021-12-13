@@ -29,11 +29,9 @@ jobs:
 
       - name: Install embassy-dev SSH Key
         shell: bash
-        env:
-          SSH_KEY: ${{secrets.WEBSITE_SSH_KEY}}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/website.key
+          echo "${{secrets.WEBSITE_SSH_KEY}}" > ~/.ssh/website.key
           chmod 0600 ~/.ssh/website.key
           stat ~/.ssh/website.key
 
