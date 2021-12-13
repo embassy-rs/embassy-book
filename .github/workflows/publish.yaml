@@ -21,8 +21,11 @@ jobs:
       - run: npm install
       - run: make
 
-      - name: Deploy
+      - name: Deploy GH pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/site
+
+      - name: Deploy embassy.dev
+        run: rsync -avz ./build/site/ embassy@embassy.dev:
