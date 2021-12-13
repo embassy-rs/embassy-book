@@ -27,5 +27,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/site
 
+      - name: Install embassy-dev SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo -n "$WEBSITE_SSH_KEY" > ~/.ssh/website.key
+          chmod 0600 ~/.ssh/website.key
+
       - name: Deploy embassy dev
-        run: rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./build/site/ embassy@embassy.dev:.
+        run: rsync -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/website.key" -avz ./build/site/ embassy@embassy.dev:.
