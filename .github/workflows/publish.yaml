@@ -27,5 +27,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build/site
 
-      - name: Deploy embassy.dev
-        run: rsync -avz ./build/site/ embassy@embassy.dev:
+      - name: Deploy embassy dev
+        run: rsync -avz ./build/site/ embassy@embassy.dev:.
