@@ -28,4 +28,4 @@ jobs:
           publish_dir: ./build/site
 
       - name: Deploy embassy dev
-        run: rsync -avz ./build/site/ embassy@embassy.dev:.
+        run: rsync -e "ssh -o StrictHostKeyChecking=no" -avz ./build/site/ embassy@embassy.dev:.
