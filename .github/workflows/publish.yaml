@@ -28,9 +28,12 @@ jobs:
           publish_dir: ./build/site
 
       - name: Install embassy-dev SSH Key
+        shell: bash
+        env:
+          SSH_KEY: ${{secrets.WEBSITE_SSH_KEY}}
         run: |
           mkdir -p ~/.ssh
-          echo -n "$WEBSITE_SSH_KEY" > ~/.ssh/website.key
+          echo -n "$SSH_KEY" > ~/.ssh/website.key
           chmod 0600 ~/.ssh/website.key
 
       - name: Deploy embassy dev
