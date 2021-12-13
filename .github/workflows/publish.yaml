@@ -35,6 +35,7 @@ jobs:
           mkdir -p ~/.ssh
           echo -n "$SSH_KEY" > ~/.ssh/website.key
           chmod 0600 ~/.ssh/website.key
+          stat -l ~/.ssh/website.key
 
       - name: Deploy embassy dev
         run: rsync -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/website.key" -avz ./build/site/ embassy@embassy.dev:.
