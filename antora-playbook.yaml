@@ -5,7 +5,7 @@ site:
 content:
   sources:
     - url: https://github.com/embassy-rs/embassy.git
-      branches: book-poc
+      branches: master
       start_path: docs
 ui: 
   bundle:
