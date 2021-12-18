@@ -13,7 +13,7 @@ content:
       start_path: docs
 ui: 
   bundle:
-    url: https://github.com/embassy-rs/embassy-antora-ui/releases/download/0.2.1/ui-bundle.zip
+    url: https://github.com/embassy-rs/embassy-antora-ui/releases/download/0.2.2/ui-bundle.zip
     snapshot: true
 
 output:
