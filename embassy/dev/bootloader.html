@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Examples :: Embassy Docs</title>
+    <title>Bootloader :: Embassy Docs</title>
     <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script>var uiRootPath = '../../_'</script>
@@ -56,7 +56,7 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="bootloader.html">Bootloader</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -71,7 +71,7 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="examples.html">Examples</a>
   </li>
 </ul>
@@ -105,48 +105,82 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Embassy</a></li>
-    <li><a href="examples.html">Examples</a></li>
+    <li><a href="bootloader.html">Bootloader</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/master/docs/modules/ROOT/pages/examples.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/embassy-rs/embassy/edit/master/docs/modules/ROOT/pages/bootloader.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Examples</h1>
+<h1 class="page">Bootloader</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>Embassy provides examples for all HALs supported. You can find them in the <code>examples/</code> folder.</p>
+<p><code>embassy-boot</code> a lightweight bootloader supporting firmware application upgrades in a power-fail-safe way, with trial boots and rollbacks.</p>
 </div>
 <div class="paragraph">
-<p>Main loop example</p>
+<p>The bootloader can be used either as a library or be flashed directly if you are happy with the default configuration and capabilities.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-rust hljs" data-lang="rust">#![feature(type_alias_impl_trait)]
-
-use embassy::executor::Spawner;
-use embassy::time::{Duration, Timer};
-use log::*;
-
-#[embassy::task]
-async fn run() {
-    loop {
-        info!("tick");
-        Timer::after(Duration::from_secs(1)).await;
-    }
-}
-
-#[embassy::main]
-async fn main(spawner: Spawner) {
-    env_logger::builder()
-        .filter_level(log::LevelFilter::Debug)
-        .format_timestamp_nanos()
-        .init();
-
-    spawner.spawn(run()).unwrap();
-}</code></pre>
+<div class="paragraph">
+<p>By design, the bootloader does not provide any network capabilities. Networking capabilities for fetching new firmware can be provided by the user application, using the bootloader as a library for updating the firmware, or by using the bootloader as a library and adding this capability yourself.</p>
+</div>
+<div class="paragraph">
+<p>The bootloader supports both internal and external flash by relying on the <code>embedded-storage</code> traits.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hardware_support"><a class="anchor" href="#_hardware_support"></a>Hardware support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The bootloader supports</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>nRF52 with and without softdevice</p>
+</li>
+<li>
+<p>STM32 L4, WB, WL, L1 and L0</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In general, the bootloader works on any platform that implements the <code>embedded-storage</code> traits for its internal flash, but may require custom initialization code to work.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_design"><a class="anchor" href="#_design"></a>Design</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The bootloader divides the storage into 4 main partitions, configured by a linker script:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>BOOTLOADER - Where the bootloader is placed. The bootloader itself consumes about 8kB of flash.</p>
+</li>
+<li>
+<p>ACTIVE - Where the main application is placed. The bootloader will attempt to load the application at the start of this partition. This partition is only written to by the bootloader.</p>
+</li>
+<li>
+<p>DFU - Where the application-to-be-swapped is placed. This partition is written to by the application.</p>
+</li>
+<li>
+<p>BOOTLOADER STATE - Where the bootloader stores the current state describing if the active and dfu partitions need to be swapped. When the new firmware has been written to the DFU partition, a flag is set to instruct the bootloader that the partitions should be swapped.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The partitions for ACTIVE (+BOOTLOADER), DFU and BOOTLOADER_STATE may be placed in separate flash, but they have to support compatible page sizes.</p>
+</div>
+<div class="paragraph">
+<p>The bootloader has a platform-agnostic part, which implements the power fail safe swapping algorithm given the boundaries set by the partitions. The platform-specific part is a minimal shim that provides additional functionality such as watchdogs or supporting the nRF52 softdevice.</p>
+</div>
 </div>
 </div>
 </article>
