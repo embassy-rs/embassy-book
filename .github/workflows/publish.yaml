@@ -10,7 +10,7 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
 
       - uses: actions/checkout@v2
@@ -26,7 +26,6 @@ jobs:
         run: |
           mkdir -p ~/.kube
           echo "${{secrets.KUBECONFIG}}" > ~/.kube/config
-          kubectl config view
           POD=$(kubectl -n embassy get po -l app=website -o jsonpath={.items[0].metadata.name})
           mv build/site build/book
           kubectl cp build/book $POD:/usr/share/nginx/html
