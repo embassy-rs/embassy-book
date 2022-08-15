@@ -1,7 +1,7 @@
 site:
   title: Embassy Docs
   url: https://embassy.dev/book
-  start_page: embassy::index.adoc
+  start_page: ROOT::index.adoc
 
 content:
   sources:
