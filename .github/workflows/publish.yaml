@@ -21,19 +21,12 @@ jobs:
       - run: npm install
       - run: make
 
-      - name: Deploy GH pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/site
-
-      - name: Install embassy-dev SSH Key
+      - name: Publish
         shell: bash
         run: |
-          mkdir -p ~/.ssh
-          echo "${{secrets.WEBSITE_SSH_KEY}}" > ~/.ssh/website.key
-          chmod 0600 ~/.ssh/website.key
-          stat ~/.ssh/website.key
-
-      - name: Deploy embassy dev
-        run: rsync -e "ssh -o StrictHostKeyChecking=no -i ~/.ssh/website.key" -avz ./build/site/ embassy@embassy.dev:.
+          mkdir -p ~/.kube
+          echo "${{secrets.KUBECONFIG}}" > ~/.kube/config
+          kubectl config view
+          POD=$(kubectl -n embassy get po -l app=website -o jsonpath={.items[0].metadata.name})
+          mv build/site build/book
+          kubectl cp build/book $POD:/usr/share/nginx/html
