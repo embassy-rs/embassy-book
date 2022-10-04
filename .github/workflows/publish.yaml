@@ -28,4 +28,5 @@ jobs:
           echo "${{secrets.KUBECONFIG}}" > ~/.kube/config
           POD=$(kubectl -n embassy get po -l app=website -o jsonpath={.items[0].metadata.name})
           mv build/site build/book
+          kubectl exec $POD -- mkdir -p /usr/share/nginx/html
           kubectl cp build/book $POD:/usr/share/nginx/html
