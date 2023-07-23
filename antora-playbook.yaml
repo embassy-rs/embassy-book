@@ -6,7 +6,7 @@ site:
 content:
   sources:
     - url: https://github.com/embassy-rs/embassy.git
-      branches: master
+      branches: main
       start_path: docs
 ui: 
   bundle:
