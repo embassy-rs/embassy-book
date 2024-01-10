@@ -7,7 +7,7 @@ clean:
 	rm -Rf build
 
 build:
-	$(ANTORA_CLI) --fetch antora-playbook.yaml
+	$(ANTORA_CLI) --fetch antora-playbook.yaml --stacktrace
 
 local:
 	$(ANTORA_CLI) --fetch local-antora-playbook.yaml
