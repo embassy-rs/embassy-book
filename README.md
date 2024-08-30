@@ -1,4 +1,4 @@
-# *DEPRECATED* The Book of Embassy
+# *DEPRECATED* 
 
 
 *NOTE*: This repository is no longer the source for the Embassy Book. Have a look [here](https://github.com/embassy-rs/embassy/tree/main/docs) for the new location of the book.
