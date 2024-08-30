@@ -1,8 +1,7 @@
-# The Book of Embassy
+# *DEPRECATED* The Book of Embassy
 
-*DEPRECATED*
 
-This repository is no longer the source for the Embassy Book. Have a look [here](https://github.com/embassy-rs/embassy/tree/main/docs) for the new location of the book.
+*NOTE*: This repository is no longer the source for the Embassy Book. Have a look [here](https://github.com/embassy-rs/embassy/tree/main/docs) for the new location of the book.
 
 To build the book, you need `npm` to install the Antora doc system. 
 
